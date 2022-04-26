@@ -1,0 +1,335 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GWNZ9GLY4"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-3GWNZ9GLY4');
+    </script>
+	
+	<title>TET Clouderops.com</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/gpx.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@v0.76.0/dist/L.Control.Locate.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@v0.76.0/dist/L.Control.Locate.min.js" charset="utf-8"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+    
+
+	<style>
+        body, html {
+            height: 100%;
+          }
+
+
+          .box {
+            background:white;
+            position:absolute;
+            top:0px;
+            right:0px;
+            bottom:0px;
+            left:0px;
+          }
+
+          .leaflet-control-messagebox {
+            display: none; /* Initially hidden */
+            border: 2px solid red;
+            background-color: white;
+            padding: 3px 10px;
+        }
+
+
+
+	</style>
+
+	
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="modal fade" id="tracks" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Countries</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="AL" onclick="Track(this)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Albania (AL)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="AND" onclick="Track(this)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Andorra (AND)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="BY" onclick="Track(this)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Belarus (BY)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="B" onclick="Track(this)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Belgium (B)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="BIH" onclick="Track(this)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Bosnia & Herzegovina (BIH)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="BG" onclick="Track(this)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Bulgaria (BG)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="HR" onclick="Track(this)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Croatia (HR)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="DK" onclick="Track(this)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Denmark (DK)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="EST" onclick="Track(this)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Estonia (EST)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="FIN" onclick="Track(this)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Finland (FIN)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="F" onclick="Track(this)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">France (F)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="D" onclick="Track(this)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Germany (D)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="GR" onclick="Track(this)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Greece (GR)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="H" onclick="Track(this)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Hungary (H)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="I" onclick="Track(this)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Italy (I)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="LV" onclick="Track(this)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Latvia (LV)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="LT" onclick="Track(this)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Lithuania (LT)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="MNE" onclick="Track(this)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Montenegro (MNE)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="NL" onclick="Track(this)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Netherlands (NL)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="NMK" onclick="Track(this)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">North Macedonia (NMK)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="N" onclick="Track(this)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Norway (N)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="PL" onclick="Track(this)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Poland (PL)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="P" onclick="Track(this)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Portugal (P)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="RO" onclick="Track(this)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Romania (RO)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="SRB" onclick="Track(this)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Serbia (SRB)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="SLO" onclick="Track(this)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Slovenia (SLO)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="E" onclick="Track(this)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Spain (E)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="S" onclick="Track(this)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Sweden (S)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="CH" onclick="Track(this)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Switzerland (CH)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="TR" onclick="Track(this)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">Turkey (TR)</label>
+                        </div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="GB" onclick="Track(this)">
+                            <label class="form-check-label" for="flexSwitchCheckDefault">United Kingdom (GB)</label>
+                        </div>
+
+                   
+
+
+                </div>
+                <!-- <div class="modal-footer">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">Close</button>
+                </div> -->
+            </div>
+            </div>
+        </div>
+      </div>
+
+    <div class="box" id="map"></div>
+    
+<script>
+
+    var trackLayer = {}
+    var markers = []
+
+
+    function Track(name){
+
+        if( typeof name.id !== 'undefined' ) {
+            var track = name.id
+        } else {
+            var track = name
+        }
+        
+        newUrl = 'https://tet.clouderops.com/?map='+track
+        //newUrl = 'http://127.0.0.1:8000/?map='+track
+        history.pushState({}, null, newUrl);
+        var selected_layer;
+        
+        // country is checked
+        if (document.getElementById(track).checked) {
+
+            // load track
+            var gpx = '/get_tracks/' + track +".gpx"; 
+            console.log('getting gpx : ', gpx)
+            var gpx_layer = new L.GPX(gpx, {
+                async: true,
+                gpx_options: {
+                    parseElements: ['track']
+                },
+                marker_options: {
+                startIconUrl: '',
+                endIconUrl: '',
+                shadowUrl: ''
+                }
+            }).on('loaded', function(e) {
+                map.fitBounds(e.target.getBounds());
+            })
+        
+            trackLayer[track] = gpx_layer
+            map.addLayer(gpx_layer)
+        
+
+        } else {
+            // country is unchecked
+            var country = track
+            markers.forEach(function(item){
+               map.removeLayer(item)
+            })
+
+            if (map.hasLayer(trackLayer[track])) {
+                map.removeLayer(trackLayer[track])
+            } else {
+                console.log('well this is not good :-/')
+                console.log("failed to find map layer for track ", track)
+            }
+        }
+    }
+
+// main 
+var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+var osmAttrib='Map data © <a href="http://osm.org/copyright">OpenStreetMap</a> contributors';
+var osm = new L.TileLayer(osmUrl, {
+    attribution: osmAttrib,
+    detectRetina: true
+});
+
+// mapbox details
+var token = 'pk.eyJ1Ijoid2VybmVyZ2lsbG1lciIsImEiOiJja3pjbmh6bHcwMGt2MnZzMXh2NXQ1bXd3In0.pF22YNFIegIitUJX9i6diQ';
+var mapboxUrl = 'https://api.mapbox.com/styles/v1/mapbox/streets-v10/tiles/{z}/{x}/{y}@2x?access_token=' + token;
+var mapboxAttrib = 'Map data © <a href="http://osm.org/copyright">OpenStreetMap</a> contributors. Tiles from <a href="https://www.mapbox.com">Mapbox</a>.';
+var mapbox = new L.TileLayer(mapboxUrl, {
+  attribution: mapboxAttrib,
+  tileSize: 512,
+  zoomOffset: -1
+});
+
+// load map
+var map = new L.Map('map', {
+    tap: false, // ref https://github.com/Leaflet/Leaflet/issues/7255
+    layers: [mapbox],
+    center: [53.92, 23.38], // roughly over europe
+    zoom: 5.00,
+    zoomControl: true
+});
+
+// goelocation button
+lc = L.control.locate({
+    strings: {
+        title: "Show me where I am"
+    }
+}).addTo(map);
+
+// TET tracks selection dialog
+var trackSelect = new bootstrap.Modal(document.getElementById('tracks'), {
+    keyboard: false
+  })
+
+L.easyButton('<span class="star">&equiv;</span>', function(){
+    trackSelect.toggle()
+}).addTo(map);
+
+// URL parameter
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const countryMap = urlParams.get('map')
+console.log("countryMap : ", countryMap);
+
+if( typeof countryMap !== 'undefined' ) {
+    if (countryMap) {
+        document.getElementById(countryMap).checked = true;
+        Track(countryMap)
+    }
+}
+
+</script>
+
+
+</body>
+</html>
